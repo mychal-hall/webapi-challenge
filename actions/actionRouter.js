@@ -4,6 +4,9 @@ const Actions = require("../data/helpers/actionModel.js");
 
 const router = express.Router();
 
+
+// We are able to get the actions in the db by calling .get at /api/actions
+
 router.get("/", async (req, res) => {
   try {
     const actions = await Actions.get();
@@ -14,6 +17,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Posting to the action list requires project_id, description, and notes
 router.post("/", validateAction, async (req, res) => {
   try {
     const action = await Actions.insert(req.body);
@@ -23,6 +27,7 @@ router.post("/", validateAction, async (req, res) => {
   }
 });
 
+// Delete function targets the action by ID
 router.delete("/:id", async (req, res) => {
   try {
     const count = await Actions.remove(req.params.id);
@@ -36,6 +41,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// By touching the id of an action we can update the stored data and modify it
 router.put("/:id", validateAction, async (req, res) => {
   try {
     const action = await Actions.update(req.params.id, req.body);
@@ -50,6 +56,8 @@ router.put("/:id", validateAction, async (req, res) => {
   }
 });
 
+
+// Custon Middleware which will check the action against the expected data structure
 function validateAction(req, res, next) {
   if (req.body && Object.keys(req.body).length) {
     if (

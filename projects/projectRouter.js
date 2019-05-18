@@ -16,8 +16,14 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", validateProjectId, async (req, res) => {
-  res.status(200).json(res.project);
+router.get("/:id/actions", async (req, res) => {
+  try {
+    const actions = await Projects.getProjectActions(req.params.id);
+    res.status(200).json(actions);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Houston, we have a problem" });
+  }
 });
 
 router.delete("/:id", validateProjectId, async (req, res) => {
