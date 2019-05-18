@@ -3,14 +3,16 @@ const express = require("express");
 const server = express();
 
 const ProjectRouter = require("./projects/projectRouter.js");
+const ActionRouter = require("./actions/actionRouter.js");
 
 server.use(express.json());
 server.use("/api/projects", ProjectRouter);
+server.use("/api/actions", ActionRouter);
 server.use(logger);
 
 server.get("/", (req, res) => {
-    res.send(`<h2>Let's write some middleware!</h2>`);
-  });
+  res.send(`<h2>Let's write some middleware!</h2>`);
+});
 
 function logger(req, res, next) {
   const time = new Date();
