@@ -23,6 +23,7 @@ router.post("/", validateAction, async (req, res) => {
     const action = await Actions.insert(req.body);
     res.status(201).json(action);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Error creating the action." });
   }
 });
@@ -37,6 +38,7 @@ router.delete("/:id", async (req, res) => {
       res.status(404).json({ message: "The action does not exist" });
     }
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Error deleting the action." });
   }
 });
